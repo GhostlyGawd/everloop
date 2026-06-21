@@ -46,13 +46,15 @@ cat state/counter.txt   # => 3
 
 Three **separate processes**, each starting cold, advanced a counter `1 → 2 → 3` with **no shared
 memory** — only `state/`. That's the whole trick. Now swap the demo step for a real Claude Code
-`/tick` and you have an agent that runs forever. → [`docs/wire-claude-code.md`](docs/wire-claude-code.md)
+agent and you have one that runs forever → ready-to-run example in
+[`examples/claude/`](examples/claude/) (or read [`docs/wire-claude-code.md`](docs/wire-claude-code.md)).
 
 ## What you get
 
 - **`everloop/tick.sh` / `.ps1`** — the bounded tick driver (lock → boot → one step → persist → exit).
 - **`state/`** — durable memory: a regenerated `RESUME.md` boot block + an append-only `ledger.md`.
 - **`examples/counter/`** — the dependency-free demo above (runnable in CI, proves the mechanic).
+- **`examples/claude/`** — a **Claude Code reference agent**: each tick is one fresh `claude` process.
 - **`ecosystem.config.cjs`** — pm2 driver: one tick per cron fire in a fresh process. Or use cron/systemd.
 - **`docs/wire-claude-code.md`** — turn each tick into a Claude Code run.
 
@@ -85,8 +87,9 @@ modeling, reach for the projects above — and wrap them in an everloop tick so 
 
 ## Status
 
-`v0.1.0` — minimal but real. The core mechanic works and is tested. Roadmap: richer state
-helpers, a Claude Code reference agent, and a verification/guard layer. Issues and PRs welcome.
+`v0.1.0` — minimal but real. The core mechanic works and is tested. A Claude Code reference agent
+ships in [`examples/claude/`](examples/claude/). Roadmap: richer state helpers and an optional
+verification/guard layer. [Contributing welcome](CONTRIBUTING.md) — issues and PRs.
 
 ## License
 
