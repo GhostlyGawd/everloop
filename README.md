@@ -69,10 +69,19 @@ routine) and you can move the agent between machines without losing a thing.
 
 ## Why not just use \<X\>?
 
-everloop is intentionally *small* and *unopinionated*. It is **not** a general agent framework,
-a memory database, or a workflow engine — it's the ~50 lines of loop + state plumbing that those
-tools leave you to assemble yourself. Bring your own model and your own step logic; everloop just
-makes the loop survive.
+The big, mature agent projects are excellent — and solve a *different* problem. everloop is the
+small survival primitive they each assume you've already built. Honest comparison:
+
+| You're looking at… | What it actually is | Why everloop is different |
+|---|---|---|
+| **claude-flow** | A multi-agent **swarm orchestrator** — spin up fleets of agents, route tasks between them. Much larger & more mature. | everloop runs **one** loop and has *no* opinion about agents, swarms, or routing. It's the disposable-process-over-durable-state trick underneath, not a fleet manager. |
+| **LangGraph** | A **graph workflow framework** with checkpointers; you model your app as nodes/edges and *assemble* persistence from its primitives. | everloop isn't a framework you build inside. It's ~50 lines of loop + `state/` you own outright. No graph, no DSL, bring your own step logic. |
+| **Letta / MemGPT** | **Tiered memory** — self-editing context so an agent remembers more *within* a session. | Complementary, not competing. Letta answers "what does the agent remember?"; everloop answers "how does the **process** never die?" Use both: Letta for memory, everloop for the immortal loop. |
+| **A cron job + a script** | The closest honest analogue — and a fine start. | everloop is that, plus the parts you'd hand-roll next: a regenerated boot block, an append-only ledger, a tick lock, and a swappable scheduler. ~50 lines so you can read all of it. |
+
+**The one-line test:** if your problem is *"my long-running agent fills its context window and
+dies,"* everloop is aimed squarely at it. If your problem is orchestration, memory, or workflow
+modeling, reach for the projects above — and wrap them in an everloop tick so they survive.
 
 ## Status
 
